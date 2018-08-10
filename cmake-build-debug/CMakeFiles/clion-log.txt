@@ -1,0 +1,6 @@
+"/Users/wuzheqi/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/182.3684.76/CLion.app/Contents/bin/cmake/mac/bin/cmake" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/wuzheqi/Documents/c/c++Blocks/排序
+CMake Error at CMakeLists.txt:2 (project):
+  project PROJECT called with incorrect number of arguments
+
+
+-- Configuring incomplete, errors occurred!
