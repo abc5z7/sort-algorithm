@@ -1,0 +1,3 @@
+/Users/wuzheqi/Documents/c/c++Blocks/排序/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/wuzheqi/Documents/c/c++Blocks/排序/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/wuzheqi/Documents/c/c++Blocks/排序/cmake-build-debug/CMakeFiles/demo.dir

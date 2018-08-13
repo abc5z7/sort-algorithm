@@ -11,6 +11,7 @@
 using namespace std;
 
 #include <ctime>
+#include <string.h>
 #include <cstdlib>
 #include <iomanip>
 #include <math.h>
@@ -19,7 +20,7 @@ using namespace std;
 #include <algorithm>
 
 // N为数组大小
-const int N = 5;
+const int N = 10;
 
 // 用于计算函数运算时间
 clock_t Begin, End;
@@ -68,6 +69,10 @@ void bucketSort(int *, int);        // 桶排序
 void radixSort1(int *, int);        // 基数排序
 
 void BoGoSort(int *, int);          // BoGo排序
+
+/******辅助函数*******/
+void swap(int &, int &);            // 交换
+bool compare(const int *, const int *, int);    // 数组比较
 
 void allSortTimeCost();             // 所有排序消耗时间
 void showMenu();
@@ -238,6 +243,23 @@ void allSortTimeCost() {
  */
 
 /**
+ * 交换函数
+ *
+ * 使用异或，整数异或本身为结果0，一个数异或0结果为本身。
+ *
+ * @param [in] a: 第一个元素
+ * @param [in] a: 第二个元素
+ * @return
+ */
+ void swap(int &a, int &b) {
+     a ^= b;
+     b ^= a;        // 相当于b=a
+     a ^= b;        // 相当于a=b
+ }
+
+
+
+/**
  * 冒泡排序
  * @param [in] a: 数组名
  * @param [in] n: 数组大小
@@ -287,8 +309,6 @@ void bubbleSort2(int a[], int n) {
  * @return
  */
 void cocktailSort(int a[], int n) {
-    int temp;
-    
     // 记录右侧最后一次交换的位置
     int lastRightExchangeIndex = 0;
     
@@ -308,10 +328,8 @@ void cocktailSort(int a[], int n) {
         // 奇数轮，从左到右比较和交换
         for (int j = leftSortBorder; j < rightSortBorder; ++j) {
             if (a[j] > a[j + 1]) {
-                temp = a[j];
-                a[j] = a[j + 1];
-                a[j + 1] = temp;
-                
+                swap(a[j], a[j + 1]);
+
                 // 有元素交换，所以不是有序，标记变为false
                 isSorted = false;
                 lastRightExchangeIndex = j;
@@ -328,10 +346,7 @@ void cocktailSort(int a[], int n) {
         // 偶数轮，从右向左比较和交换
         for (int j = rightSortBorder; j > leftSortBorder; --j) {
             if (a[j] < a[j - 1]) {
-                temp = a[j];
-                a[j] = a[j - 1];
-                a[j - 1] = temp;
-                
+                swap(a[j], a[j - 1]);
                 // 有元素交换，所以不是有序，标记为false
                 isSorted = false;
                 lastLeftExchangeIndex = j;
@@ -1100,6 +1115,24 @@ void radixSort1(int a[], int n) {
  */
 
 /**
+ * 比较函数
+ *
+ * @param [in] arr1: 第一个数组
+ * @param [in] arr2: 第二个数组
+ * @param [in] n: 数组大小
+ * @return [bo]: 相等返回true，不等返回false
+ */
+ bool compare(const int arr1[], const int arr2[], int n) {
+     for (int i = 0; i < n; ++i) {
+         if (arr1[i] != arr2[i])
+             return false;
+     }
+     return true;
+ }
+
+
+
+/**
  * BoGo排序
  *
  * @param [in] a 待排序数组
@@ -1107,31 +1140,36 @@ void radixSort1(int a[], int n) {
  * @return
  */
 void BoGoSort(int a[], int n) {
-    
-    int *b = new int[10]{0};
+    // 初始化数组b并把a赋值给b
+    int *b = new int[N]{0};
+    for (int i = 0; i < n; ++i) {
+        b[i] = a[i];
+    }
+
+    // 让数组b有序，以便判断数组a是否有序
     for (int i = 0; i < n; i++) {
         for (int j = 1; j < n - i; j++) {
-            if (b[j - 1] > b[j])        // 若顺序不适合则交换数据
-                swap(b[j - 1], b[j]);       // 每一次遍历都有一个最大的数移动到最后，所以第二重遍历只需n-i次
+            if (b[j - 1] > b[j])
+                swap(b[j - 1], b[j]);
         }
     }
-    int count = 0;
+
+    int count = 0;      // 计数器
     srand((unsigned) time(nullptr));
-    int index;
-    int last = 0;
-    while (a != b) {
-        for (int i = 0; i < n; ++i) {
-            index = rand() % 10;
-            if (last == index)
+    int index1, index2;
+    while (!compare(a, b, n)) {     // 若两数组不相等，继续循环
+        for (int i = 0; i < 10; ++i) {
+            // 获取两个随机索引
+            index1 = rand() % n;
+            index2 = rand() % n;
+            if (index1 == index2)
                 continue;
-            if (index <= 0 || index >10)
-                continue;
-            swap(a[last], a[index]);
-            count++;
-            if (count % 50000 == 0)
-                cout << "已经运算了" << count << "次..." << endl;
-            last = index;
+            // 交换数组元素实现打乱数组
+            swap(a[index1], a[index2]);
         } // for
+        count++;
+        if (count % 1000000 == 0)
+            cout << "已经比较了" << count << "次..." << endl;
     } // while
     cout << "最终运算了" << count << "次..." << endl;
 

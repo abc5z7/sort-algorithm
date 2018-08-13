@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/wuzheqi/Documents/c/c++Blocks/排序/main.cpp
+iostream
+-
+ctime
+-
+string.h
+-
+cstdlib
+-
+iomanip
+-
+math.h
+-
+cmath
+-
+list
+-
+algorithm
+-
+
