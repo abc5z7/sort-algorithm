@@ -36,6 +36,7 @@ double duration;        // 记录运算时间
 void bubbleSort1(int *, int);       // 冒泡排序初始
 void bubbleSort2(int *, int);       // 冒泡排序改进
 void cocktailSort(int *, int);      // 鸡尾酒排序
+void oddEvenSort(int *, int);       // 奇偶排序
 
 void quickSort1(int *, int);        // 快速排序
 void quickSort2(int *, int);        // 快速排序改进
