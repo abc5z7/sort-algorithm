@@ -14,6 +14,8 @@
     <list default="true" id="5e572655-d272-4ec5-8d27-2b05225e23ec" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/demo.dir/main.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/demo.dir/main.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/demo" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/demo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -80,8 +82,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="215">
-              <caret line="23" column="39" selection-start-line="23" selection-start-column="39" selection-end-line="23" selection-end-column="39" />
+            <state relative-caret-position="-4580">
+              <caret line="72" column="10" lean-forward="true" selection-start-line="72" selection-start-column="10" selection-end-line="72" selection-end-column="10" />
               <folding>
                 <element signature="e#501#517#0" expanded="true" />
               </folding>
@@ -208,7 +210,7 @@
       <updated>1533862515982</updated>
       <workItem from="1533862522041" duration="18000" />
       <workItem from="1534139925989" duration="27000" />
-      <workItem from="1534140262837" duration="24907000" />
+      <workItem from="1534140262837" duration="25261000" />
     </task>
     <task id="LOCAL-00001" summary="第二点五次更新">
       <created>1534148847812</created>
@@ -221,7 +223,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24952000" />
+    <option name="totallyTimeSpent" value="25306000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -234,12 +236,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="43" y="31" width="1400" height="759" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49537036" visible="true" weight="0.2569956" />
       <window_info id="Structure" order="1" sideWeight="0.5046296" side_tool="true" weight="0.2569956" />
       <window_info id="Favorites" order="2" sideWeight="0.5023148" side_tool="true" weight="0.2569956" />
-      <window_info active="true" anchor="bottom" id="Messages" sideWeight="0.46759942" visible="true" weight="0.32919255" />
+      <window_info anchor="bottom" id="Messages" sideWeight="0.46759942" weight="0.32919255" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4712813" weight="0.32919255" />
@@ -248,8 +249,8 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.4992636" weight="0.32919255" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49484536" weight="0.32919255" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5324006" side_tool="true" visible="true" weight="0.32919255" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.49410897" visible="true" weight="0.32919255" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.505891" side_tool="true" visible="true" weight="0.32919255" />
       <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.4992636" weight="0.32919255" />
       <window_info anchor="bottom" id="CMake" order="11" weight="0.32919255" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -311,8 +312,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="23" column="39" selection-start-line="23" selection-start-column="39" selection-end-line="23" selection-end-column="39" />
+        <state relative-caret-position="-4580">
+          <caret line="72" column="10" lean-forward="true" selection-start-line="72" selection-start-column="10" selection-end-line="72" selection-end-column="10" />
           <folding>
             <element signature="e#501#517#0" expanded="true" />
           </folding>
