@@ -6,6 +6,30 @@
 //  Copyright © 2018年 菜包. All rights reserved.
 //
 
+
+
+
+/** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ *
+ *
+ *                       警告(warning)
+ *
+ *                      必   读   手   册
+ *
+ *                       18/8/7 by 菜包
+ *
+ *
+ *  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ *
+ * 各种排序算法的集合。
+ *
+ *
+ */
+
+
+
+
+
 #include <iostream>
 
 using namespace std;
@@ -33,13 +57,16 @@ double duration;        // 记录运算时间
  */
 
 /**交换排序**/
-void bubbleSort1(int *, int);       // 冒泡排序初始
-void bubbleSort2(int *, int);       // 冒泡排序改进
+void bubbleSort1(int *, int);       // 冒泡排序
+void bubbleSort2(int *, int);       // 冒泡排序优化
 void cocktailSort(int *, int);      // 鸡尾酒排序
 void oddEvenSort(int *, int);       // 奇偶排序
+void gnomeSort1(int *, int);        // 侏儒排序
+void gnomeSort2(int *, int);        // 侏儒排序优化
+void combSort(int *, int);          // 梳排序
 
 void quickSort1(int *, int);        // 快速排序
-void quickSort2(int *, int);        // 快速排序改进
+void quickSort2(int *, int);        // 快速排序优化
 
 
 /**插入排序**/
@@ -73,7 +100,8 @@ void BoGoSort(int *, int);          // BoGo排序
 
 /******辅助函数*******/
 void swap(int &, int &);            // 交换
-bool compare(const int *, const int *, int);    // 数组比较
+bool arrayCompare(const int *, const int *, int);    // 数组比较
+//bool compare(int, int);             // 整型比较
 
 void allSortTimeCost();             // 所有排序消耗时间
 void showMenu();
@@ -82,32 +110,32 @@ void showMenu();
 int main(int argc, const char *argv[]) {
     // insert code here...
     std::cout << "\t\tHello, World!\n";
-    
+
     int a[N];
     bool judge;     //用于判断输入的选择是否合法
     int input;      //存储输入的选择
-    
+
     // 函数指针，用于优化获取算法耗时
     void (*ptrFunction)(int *, int) = nullptr;
-    
+
     // 随机函数，生成随机数组
     srand((unsigned) time(nullptr));
     for (int &i : a)
         i = rand() % (N * 10);
-    
+
     cout << endl;
     cout << "\t\t" << "生成的随机数服从独立均匀分布" << endl;
     cout << "\t\t";
     cout << "排序前：" << endl;
     cout << "\t\t";
-    
+
     for (int i : a)
         cout << i << ' ';
-    
+
     cout << endl;
-    
+
     showMenu();
-    
+
     do {
         judge = false;
         cout << "             > 请做出你的选择：";
@@ -121,6 +149,18 @@ int main(int argc, const char *argv[]) {
                 break;
             case 12:
                 ptrFunction = cocktailSort;
+                break;
+            case 13:
+                ptrFunction = oddEvenSort;
+                break;
+            case 14:
+                ptrFunction = gnomeSort1;
+                break;
+            case 15:
+                ptrFunction = gnomeSort2;
+                break;
+            case 16:
+                ptrFunction = combSort;
                 break;
             case 20:
                 ptrFunction = selectSort;
@@ -166,12 +206,12 @@ int main(int argc, const char *argv[]) {
                 cout << "\t\t输入错误，请重新选择" << endl;
         }
     } while (judge);
-    
+
     // 排序并计算排序所耗时间
     Begin = clock();
     ptrFunction(a, N);
     End = clock();
-    
+
     cout << endl;
     cout << endl;
     cout << "\t\t排序后：" << endl;
@@ -179,7 +219,7 @@ int main(int argc, const char *argv[]) {
     for (int i : a)
         cout << i << ' ';
     cout << endl;
-    
+
     // 输出函数运算所消耗的时间
     duration = double(End - Begin) / CLOCKS_PER_SEC;
     cout << "\t\t用时" << setiosflags(ios::fixed) << duration << "秒" << endl;
@@ -195,23 +235,27 @@ void showMenu() {
     cout << "           *    请选择排序算法    *            " << endl;
     cout << "                                             " << endl;
     cout << "             10 <-   冒泡排序                 " << endl;
-    cout << "             11 <-   冒泡排序改进              " << endl;
-    cout << "             12 <-   鸡尾酒排序                " << endl;
-    cout << "             20 <-   选择排序                  " << endl;
+    cout << "             11 <-   冒泡排序优化              " << endl;
+    cout << "             12 <-   鸡尾酒排序               " << endl;
+    cout << "             13 <-   奇偶排序                 " << endl;
+    cout << "             14 <-   侏儒排序                 " << endl;
+    cout << "             15 <-   侏儒排序优化              " << endl;
+    cout << "             16 <-   梳排序                   " << endl;
+    cout << "             20 <-   选择排序                 " << endl;
     cout << "             30 <-   直接插入排序              " << endl;
-    cout << "             40 <-   希尔排序                  " << endl;
-    cout << "             50 <-   堆排序                    " << endl;
-    cout << "             60 <-   归并排序 递归              " << endl;
-    cout << "             61 <-   归并排序 非递归            " << endl;
-    cout << "             70 <-   快速排序                  " << endl;
-    cout << "             71 <-   快速排序改进               " << endl;
-    cout << "             80 <-   计数排序                  " << endl;
-    cout << "             81 <-   桶排序 目前只实现100以内的数 " << endl;
-    cout << "             82 <-   基数排序 数组实现           " << endl;
-    cout << "             83 <-   鸽巢排序                  " << endl;
-    cout << "             84 <-   BoGo排序                  " << endl;
-    cout << "                                              " << endl;
-    cout << "                                              " << endl;
+    cout << "             40 <-   希尔排序                 " << endl;
+    cout << "             50 <-   堆排序                   " << endl;
+    cout << "             60 <-   归并排序 递归             " << endl;
+    cout << "             61 <-   归并排序 非递归           " << endl;
+    cout << "             70 <-   快速排序                 " << endl;
+    cout << "             71 <-   快速排序优化              " << endl;
+    cout << "             80 <-   计数排序                 " << endl;
+    cout << "             81 <-   桶排序 目前只实现100以内的数" << endl;
+    cout << "             82 <-   基数排序 数组实现         " << endl;
+    cout << "             83 <-   鸽巢排序                 " << endl;
+    cout << "             84 <-   BoGo排序                 " << endl;
+    cout << "                                             " << endl;
+    cout << "                                             " << endl;
     //    cout << "-----------------------------------------------" << endl;
 }
 
@@ -219,12 +263,13 @@ void showMenu() {
 /**
  * 所有排序时间消耗
  * 用于比较在时间上各算法的效率
+ *
  * @param
  * @return
  */
 void allSortTimeCost() {
     void (*ptrFunc)(int *, int) = nullptr;
-    
+
 }
 
 
@@ -252,12 +297,11 @@ void allSortTimeCost() {
  * @param [in] a: 第二个元素
  * @return
  */
- void swap(int &a, int &b) {
-     a ^= b;
-     b ^= a;        // 相当于b=a
-     a ^= b;        // 相当于a=b
- }
-
+void swap(int &a, int &b) {
+    a ^= b;
+    b ^= a;        // 相当于b=a
+    a ^= b;        // 相当于a=b
+}
 
 
 /**
@@ -277,7 +321,8 @@ void bubbleSort1(int a[], int n) {
 
 
 /**
- * 冒泡排序改进
+ * 冒泡排序优化
+ *
  * 新增判断是否有交换元素，
  * 如果有交换元素，说明数组还未有序，
  * 如果没有交换过元素，说明数组已经有序。
@@ -312,20 +357,20 @@ void bubbleSort2(int a[], int n) {
 void cocktailSort(int a[], int n) {
     // 记录右侧最后一次交换的位置
     int lastRightExchangeIndex = 0;
-    
+
     // 记录左侧最后一次交换的位置
     int lastLeftExchangeIndex = 0;
-    
+
     // 无序数列的右边界，每次比较只需要比到这里为止
     int rightSortBorder = n - 1;
-    
+
     // 无序数列的左边界，每次比较只需要比到这里为止
     int leftSortBorder = 0;
-    
+
     for (int i = 0; i < n / 2; ++i) {
         // 有序标记，每一轮的初始时true
         bool isSorted = true;
-        
+
         // 奇数轮，从左到右比较和交换
         for (int j = leftSortBorder; j < rightSortBorder; ++j) {
             if (a[j] > a[j + 1]) {
@@ -340,10 +385,10 @@ void cocktailSort(int a[], int n) {
         if (isSorted) {
             break;
         }
-        
+
         // 偶数轮之前，重新标记为true
         isSorted = true;
-        
+
         // 偶数轮，从右向左比较和交换
         for (int j = rightSortBorder; j > leftSortBorder; --j) {
             if (a[j] < a[j - 1]) {
@@ -360,6 +405,168 @@ void cocktailSort(int a[], int n) {
     } // outerFor
 }
 
+
+
+/**
+ * 奇偶排序（稳定）
+ *
+ * 或砖排序
+ * 奇偶排序实际上在多处理器环境中很有用，处理器可以分别同时处理每一个奇数对，
+ * 然后又同时处理偶数对。因为奇数对是彼此独立的，每一刻都可以用不同的处理器比较和交换。这样可以非常快速地排序。
+ *
+ * 算法描述: 1、选取所有奇数列的元素与其右侧相邻的元素进行比较，将较小的元素排序在前面；
+ *          2、选取所有偶数列的元素与其右侧相邻的元素进行比较，将较小的元素排序在前面；
+ *          3、重复前面两步，直到所有序列有序为止。
+ */
+
+/**
+ * 奇偶排序
+ *
+ * @param [in] a: 待排数组
+ * @param [in] n: 数组大小
+ * @return
+ */
+void oddEvenSort(int a[], int n) {
+    bool flag = true;
+    while (true) {
+        flag = true;
+        for (int i = 1; i < n - 1; i += 2) {
+            if (a[i] > a[i + 1]) {
+                swap(a[i], a[i + 1]);
+                flag = false;
+            }
+        } // for
+
+        for (int i = 0; i < n - 1; i += 2) {
+            if (a[i] > a[i + 1]) {
+                swap(a[i], a[i + 1]);
+                flag = false;
+            }
+        } // for
+        if (flag) {
+            break;
+        }
+    } // while
+}
+
+
+
+/**
+ * 侏儒排序（稳定）
+ *
+ * 或愚人排序（Stupid Sort）
+ * 号称最简单的排序算法，只有一层循环，默认情况下前进冒泡，
+ * 一旦遇到冒泡的情况发生就往回冒，直到把这个数字放好为止
+ *
+ * 算法描述: 1、邻元素之间两两进行比较，如果这两个元素逆序，则交换；
+ *          2、如果遇到交换操作，变为向前冒泡，直至不发生交换操作位置。
+ *          3、重复1、2步直到数组有序。
+ */
+
+/**
+ * 侏儒排序
+ *
+ * @param [in] a: 待排数组
+ * @param [in] n: 数组大小
+ * @return
+ */
+void gnomeSort1(int a[], int n) {
+    int i = 0;
+    while (i < n) {
+        if (i == 0 || a[i - 1] <= a[i]) {
+            i++;
+        } else {
+            swap(a[i], a[i - 1]);
+            i--;
+        }
+    }
+}
+
+//
+///**
+// * 整型元素比较
+// *
+// * @param [in] a: 第一个整型
+// * @param [in] b: 第二个整型
+// * @return [bo]
+// */
+//bool compare(int a, int b) {
+//    return (a ^ 0 == b) != 0;
+//}
+
+
+/**
+ * 侏儒排序优化
+ *
+ * 在回溯时记下当前位置，回溯后转跳到之前位置的下一个位置
+ * 类似插入排序，不断把列表后面待排序的元素插入到列表前面已排序的部分中，
+ * 但类似于冒泡排序那样比较并交换相邻元素。
+ * 因此其算法复杂度与插入排序相当，但比插入排序需要更多的复制操作（用于交换相邻元素）。
+ * 
+ * @param [in] a: 待排数组
+ * @param [in] n: 数组长度
+ * @return
+ */
+void gnomeSort2(int a[], int n) {
+    int i = 1;
+    int previousPosition = -1;
+    while (i < n) {
+        if (i > 0 && a[i] < a[i - 1]) {
+            // 记录侏儒回溯前的位置
+            if (previousPosition == -1) {
+                previousPosition = i;
+            }
+
+            swap(a[i], a[i - 1]);
+            i--;
+        } else {
+            if (previousPosition == -1) {
+                i++;
+            } else {
+                // 回溯后转跳到下一个位置
+                i = previousPosition + 1;
+                previousPosition = -1;
+            }
+        }
+    } // while
+}
+
+
+/**
+ * 梳排序（不稳定）
+ *
+ * 改良自泡沫排序和快速排序，其要旨在于消除乌龟，亦即在数组尾部的小数值，这些数值是造成冒泡排序缓慢的主因。
+ * 相对地，兔子，亦即在数组前端的大数值，不影响冒泡排序的性能。
+ *
+ * 算法描述: 1、梳排序中，开始时的间距设置为数组长度，并在循环中以固定比率递减，通常递减率设置为1.3。
+ *          2、在一次循环中，梳排序如同泡沫排序一样把数组从首到尾扫描一次，比较及交换两项，不同的是两项的间距不固定于1。
+ *          3、如果间距递减至1，梳排序假定输入数组大致排序好，并以泡沫排序作最后检查及修正。
+ *
+ * 算法分析: 亦有人提议用1/\left(1-\frac{1}{e^\varphi}\right) \approx 1.247330950103979作递减率，
+ *          同时增加换算表协助于每一循环开始时计算新间距。
+ */
+void combSort(int a[], int n) {
+    double declineRate = 1.3;      // 递减率
+    int gap = n;        // 间距
+    bool isSwap = true;
+    while (gap > 1 || isSwap) {
+        // 若间距大于1或交换过，则间距递减
+        if (gap > 1) {
+            gap = (int) (gap / declineRate);
+        }
+
+        int i = 0;
+        isSwap = false;
+        while (i + gap < n) {
+            if (a[i] > a[i + gap]) {
+                swap(a[i], a[i + gap]);
+                isSwap = true;
+            }
+
+            i++;
+        } // innerWhile
+    } // outerWhile
+}
 
 
 /**
@@ -388,28 +595,28 @@ void cocktailSort(int a[], int n) {
 void quick_sort1(int s[], int l, int r) {
     if (l < r) {
         int m = (l + r) / 2;
-        
+
         if (s[l] > s[r])
             swap(s[l], s[r]);
         if (s[m] > s[r])
             swap(s[m], s[r]);
         if (s[m] > s[l])
             swap(s[m], s[l]);
-        
+
         int i = l, j = r, x = s[l];
-        
+
         while (i < j) {
             while (i < j && s[j] >= x)      // 从右向左找第一个小于x的数
                 j--;
             if (i < j)
                 s[i++] = s[j];
-            
+
             while (i < j && s[i] < x)       // 从左向右找第一个大于等于x的数
                 i++;
             if (i < j)
                 s[j--] = s[i];
         }
-        
+
         s[i] = x;
         quick_sort1(s, l, i - 1);       // 递归调用
         quick_sort1(s, i + 1, r);
@@ -418,7 +625,7 @@ void quick_sort1(int s[], int l, int r) {
 
 
 /**
- * 快速排序改进
+ * 快速排序优化
  * quick_sort2函数：对s[l..r]进行排序
  *
  * @param [in] s: 待排序数组
@@ -444,13 +651,13 @@ void quick_sort2(int s[], int l, int r) {
                     j--;
                 if (i < j)
                     s[i++] = s[j];
-                
+
                 while (i < j && s[i] < x)       // 从左向右找第一个大于等于x的数
                     i++;
                 if (i < j)
                     s[j--] = s[i];
             }
-            
+
             s[i] = x;
             quick_sort2(s, l, i - 1);       // 递归调用
             l = i + 1;
@@ -473,7 +680,7 @@ void quickSort1(int a[], int n) {
 
 
 /**
- * 快速排序改进
+ * 快速排序优化
  *
  * @param [in] a: 待排序数组
  * @param [in] n: 数组大小
@@ -517,7 +724,7 @@ void insertSort(int a[], int n) {
             int temp = a[i];
             for (j = i - 1; j >= 0 && a[j] > temp; j--)     // 将比a[i]大的数据后移
                 a[j + 1] = a[j];
-            
+
             a[j + 1] = temp;        // 插入到正确的位置
         } // if
     } // outerFor
@@ -658,7 +865,7 @@ void heapSort(int a[], int n) {
     int i;
     for (i = n / 2 - 1; i >= 0; i--) {      // 讲数组a构建成大顶堆
         HeapAdjust(a, i, n);
-        
+
         for (i = n - 1; i > 0; i--) {
             swap(a[0], a[i]);       // 将堆顶数据与当前未排序子序列的最后一个数据交换
             HeapAdjust(a, 0, i - 1);     // 将a[0..i - 1]调整为大顶堆
@@ -700,14 +907,14 @@ void Merge(int a[], int temp[], int first, int mid, int last) {
     int i = first, j = mid + 1;
     int m = mid, n = last;
     int k = 0;
-    
+
     while (i <= m && j <= n) {
         if (a[i] <= a[j])       // 依次比较两个序列的数，谁小取谁，将a中数据从小到大并入temp中
             temp[k++] = a[i++];
         else
             temp[k++] = a[j++];
     }
-    
+
     while (i <= m)      // 将剩余的a[i..m]并入到temp中
         temp[k++] = a[i++];
     while (j <= n)      // 将剩余的a[j..n]并入到temp中
@@ -854,11 +1061,11 @@ void countSort(int a[], int n) {
     int maxElem = getArrayMaxElem(a, n);
     int *bucket = new int[maxElem + 1]{0};
     int bucketLen = maxElem + 1;
-    
+
     for (int i = 0; i < n; ++i) {
         bucket[a[i]]++;
     } // for
-    
+
     for (int j = 0; j < bucketLen; ++j) {
         while (bucket[j] > 0) {
             a[sortIndex++] = j;
@@ -895,11 +1102,11 @@ void pigeonholeSort(int a[], int n) {
     int maxElem = getArrayMaxElem(a, n);
     int minElem = getArrayMinElem(a, n);
     int *pigeonhole = new int[maxElem - minElem + 1]{0};        // 鸽巢大小为最大值与最小值之差加1
-    
+
     for (int i = 0; i < n; ++i) {
         pigeonhole[a[i] - minElem]++;
     }
-    
+
     for (int i = 0, j = 0; i < maxElem - minElem + 1; ++i) {
         while (pigeonhole[i] > 0) {
             a[j++] = i + minElem;
@@ -980,14 +1187,14 @@ void bucketSort(int a[], int n) {
         key[i].value = 0;
         key[i].next = nullptr;
     }
-    
+
     for (int i = 0; i < n; ++i) {
         Node *insert = new Node();     // 临时节点
         insert->value = a[i];
         insert->next = nullptr;
-        
+
         number = a[i] / length;     // 映射函数，这里可以优化
-        
+
         // 若数组为空，则直接插入；若不为空，则先比较大小再插入
         // 此处在插入的过程中排序
         // 另一种算法方式为先插入，待所有数据插入完毕后再用其他排序算法对每一条非空链表排序
@@ -1004,7 +1211,7 @@ void bucketSort(int a[], int n) {
             p->next = insert;
         } // if
     } // for
-    
+
     for (int i = 0; i < length; ++i) {
         // 把排好序的数组复制到目标数组（原数组）
         p = key[i].next;
@@ -1047,7 +1254,7 @@ void bucketSort(int a[], int n) {
  */
 int getMaxDigit(int a[], int n) {
     int maxElem = getArrayMaxElem(a, n);
-    
+
     int d = 1;
     int p = 10;
     while (maxElem >= p) {
@@ -1072,33 +1279,33 @@ void radixSort1(int a[], int n) {
             // 每次分配前清空计数器
             count[j] = 0;
         }
-        
+
         for (j = 0; j < n; ++j) {
             // 统计每个桶中的记录数
             k = (a[j] / radix) % 10;
             count[k]++;
         }
-        
+
         for (j = 1; j < 10; ++j) {
             // 将tmp中的位置依次分配给每个桶
             count[j] = count[j - 1] + count[j];
         }
-        
+
         for (j = n - 1; j >= 0; --j) {
             // 将所有桶中记录依次收集到tmp中
             k = (a[j] / radix) % 10;
             tmp[count[k] - 1] = a[j];
             count[k]--;
         } // innerFor
-        
+
         for (j = 0; j < n; ++j) {
             // 将临时数组的内容复制到a中
             a[j] = tmp[j];
         }
-        
+
         radix = radix * 10;
     } // outerFor
-    
+
     delete[]tmp;
     delete[]count;
 }
@@ -1123,14 +1330,13 @@ void radixSort1(int a[], int n) {
  * @param [in] n: 数组大小
  * @return [bo]: 相等返回true，不等返回false
  */
- bool compare(const int arr1[], const int arr2[], int n) {
-     for (int i = 0; i < n; ++i) {
-         if (arr1[i] != arr2[i])
-             return false;
-     }
-     return true;
- }
-
+bool arrayCompare(const int arr1[], const int arr2[], int n) {
+    for (int i = 0; i < n; ++i) {
+        if (arr1[i] != arr2[i])
+            return false;
+    }
+    return true;
+}
 
 
 /**
@@ -1158,7 +1364,7 @@ void BoGoSort(int a[], int n) {
     int count = 0;      // 计数器
     srand((unsigned) time(nullptr));
     int index1, index2;
-    while (!compare(a, b, n)) {     // 若两数组不相等，继续循环
+    while (!arrayCompare(a, b, n)) {     // 若两数组不相等，继续循环
         for (int i = 0; i < 10; ++i) {
             // 获取两个随机索引
             index1 = rand() % n;

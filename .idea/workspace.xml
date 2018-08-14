@@ -12,7 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5e572655-d272-4ec5-8d27-2b05225e23ec" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -35,15 +35,16 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="cpp" value="1081" />
-          <entry key="txt" value="15" />
+          <entry key="cpp" value="3635" />
+          <entry key="txt" value="23" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CMakeLists.txt" value="15" />
-          <entry key="Doxygen file" value="12" />
-          <entry key="ObjectiveC" value="1069" />
+          <entry key="Doxygen file" value="63" />
+          <entry key="ObjectiveC" value="3572" />
+          <entry key="PLAIN_TEXT" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -76,8 +77,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="267">
-              <caret line="1089" column="14" lean-forward="true" selection-start-line="1089" selection-start-column="14" selection-end-line="1089" selection-end-column="14" />
+            <state relative-caret-position="-17961">
+              <caret line="119" lean-forward="true" selection-start-line="119" selection-end-line="119" />
               <folding>
                 <element signature="e#153#169#0" expanded="true" />
               </folding>
@@ -89,10 +90,19 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>compare</find>
       <find>比较</find>
       <find>swap</find>
+      <find>改进</find>
+      <find>previousPostion</find>
+      <find>compare</find>
+      <find>gnomeSort</find>
     </findStrings>
+    <replaceStrings>
+      <replace>优化</replace>
+      <replace>previousPosition</replace>
+      <replace>arrayCompare</replace>
+      <replace>gnomeSort1</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -120,7 +130,7 @@
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="27" />
+    <option name="x" value="339" />
     <option name="y" value="23" />
     <option name="width" value="1400" />
     <option name="height" value="759" />
@@ -190,12 +200,20 @@
       <updated>1533862515982</updated>
       <workItem from="1533862522041" duration="18000" />
       <workItem from="1534139925989" duration="27000" />
-      <workItem from="1534140262837" duration="7956000" />
+      <workItem from="1534140262837" duration="16495000" />
     </task>
+    <task id="LOCAL-00001" summary="第二点五次更新">
+      <created>1534148847812</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1534148847812</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8001000" />
+    <option name="totallyTimeSpent" value="16540000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -207,23 +225,23 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="27" y="23" width="1400" height="759" extended-state="0" />
+    <frame x="17" y="23" width="1400" height="759" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4976852" visible="true" weight="0.2569956" />
-      <window_info id="Structure" order="1" sideWeight="0.5023148" side_tool="true" visible="true" weight="0.2569956" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49537036" weight="0.2569956" />
+      <window_info id="Structure" order="1" sideWeight="0.5046296" side_tool="true" weight="0.2569956" />
       <window_info id="Favorites" order="2" sideWeight="0.5023148" side_tool="true" weight="0.2569956" />
-      <window_info anchor="bottom" id="Messages" sideWeight="0.48969072" weight="0.32919255" />
+      <window_info active="true" anchor="bottom" id="Messages" sideWeight="0.4837997" visible="true" weight="0.32919255" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4904271" weight="0.32919255" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.48600882" weight="0.32919255" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49852726" weight="0.39906833" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32919255" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.4992636" visible="true" weight="0.32919255" />
-      <window_info active="true" anchor="bottom" id="Event Log" order="9" sideWeight="0.50073636" side_tool="true" visible="true" weight="0.32919255" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49852726" weight="0.32919255" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5162003" side_tool="true" visible="true" weight="0.32919255" />
       <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.4992636" weight="0.32919255" />
       <window_info anchor="bottom" id="CMake" order="11" weight="0.32919255" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -264,6 +282,10 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="第二点五次更新" />
+    <option name="LAST_COMMIT_MESSAGE" value="第二点五次更新" />
+  </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
@@ -281,8 +303,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="1089" column="14" lean-forward="true" selection-start-line="1089" selection-start-column="14" selection-end-line="1089" selection-end-column="14" />
+        <state relative-caret-position="-17961">
+          <caret line="119" lean-forward="true" selection-start-line="119" selection-end-line="119" />
           <folding>
             <element signature="e#153#169#0" expanded="true" />
           </folding>
