@@ -27,7 +27,9 @@
 
 
 #include <iostream>
+
 using namespace std;
+
 #include <ctime>
 #include <string.h>
 #include <cstdlib>
@@ -67,8 +69,8 @@ void quickSort2(int *, int);        // 快速排序优化
 
 /**插入排序**/
 void insertSort(int *, int);        // 直接插入排序
+void librarySort(int *, int);       // 图书馆排序
 void shellSort(int *, int);         // 希尔排序
-
 
 /**选择排序**/
 void selectSort(int *, int);        // 选择排序
@@ -99,6 +101,7 @@ void bogoSort(int *, int);          // BoGo排序
 void swap(int &, int &);            // 交换
 bool arrayCompare(const int *, const int *, int);    // 数组比较
 //bool compare(int, int);             // 整型比较
+bool selfChecking(const int *, int);
 
 void allSortTimeCost();             // 所有排序消耗时间
 void showMenu();
@@ -177,6 +180,9 @@ int main(int argc, const char *argv[]) {
             case 31:
                 ptrFunction = shellSort;
                 break;
+            case 32:
+                ptrFunction = librarySort;
+                break;
                 // 选择排序
             case 40:
                 ptrFunction = selectSort;
@@ -233,6 +239,9 @@ int main(int argc, const char *argv[]) {
     if (input == 84)
         cout << "\t\t最终运算了" << bogoCount << "次" << endl;
 
+    if (!selfChecking(a, N)) {
+        cout << "\t\t未实现数组有序...";
+    }
     return 0;
 }
 
@@ -255,6 +264,7 @@ void showMenu() {
     cout << "             21 <-   快速排序优化              " << endl;
     cout << "             30 <-   插入排序                 " << endl;
     cout << "             31 <-   希尔排序                 " << endl;
+    cout << "             32 <-   图书馆排序 有bug          " << endl;
     cout << "             40 <-   选择排序                 " << endl;
     cout << "             41 <-   堆排序                   " << endl;
     cout << "             50 <-   归并排序 递归实现         " << endl;
@@ -282,6 +292,22 @@ void allSortTimeCost() {
 
 }
 
+/**
+ * 自检函数
+ *
+ * 检查数组是否有序
+ *
+ * @param [in] a: 待检数组
+ * @param [in] n: 数组长度
+ * @return [bo]
+ */
+bool selfChecking(const int a[], int n) {
+    for (int i = 0; i < n; ++i) {
+        if (a[i] > a[i + 1])
+            return false;
+    }
+    return true;
+}
 
 
 /*****************交换排序*****************/
@@ -792,6 +818,140 @@ void insertSort(int a[], int n) {
 }
 
 
+/**
+ * 图书馆排序（稳定）
+ *
+ * 一个图书管理员需要按照字母顺序放置书本，当在书本之间留有一定空隙时，
+ * 一本新书上架将无需移动随后的书本，可以直接插空隙。Library sort的思想就源于此。
+ * 它的缺点在于额外的空间占用，还有一个缺点来自于插入排序，存在大量的交换操作，
+ *
+ *
+ */
+void librarySort(int a[], int n) {
+    int i, j;
+    const double factor = 1;
+    int expandedLen = (int) ((1 + factor) * n);
+    int *orderedElem = (int *) malloc(expandedLen * sizeof(int));
+    for (i = 0; i < expandedLen; ++i) {
+        orderedElem[i] = 0;
+    }
+
+    // 标志gap
+    int flag = 1 << 31;
+    for (i = 0; i < expandedLen; ++i) {
+        orderedElem[i] = flag;
+    }
+
+    int index = 1;
+    int numOfIntercalatedElem = 1;
+    orderedElem[0] = a[0];
+
+    while (n > numOfIntercalatedElem) {
+        // 第i次插入2^(i-1)个元素
+        for (j = 0; j < numOfIntercalatedElem; ++j) {
+            // 待插入元素a[index]
+            //----------- 折半插入 -----------
+            int mid;
+            int low = 0;
+            int high = 2 * numOfIntercalatedElem - 1;
+            while (low <= high) {
+                mid = (low + high) / 2;
+
+                int savedMid = mid;
+                // 如果mid所在位置为gap
+                while (orderedElem[mid] == flag) {
+                    if (mid == high) {
+                        // 当向右遍历没有找到元素值时，改成向左遍历
+                        mid = savedMid - 1;
+                        while (orderedElem[mid] == flag) {
+                            mid--;
+                        } // innerWhile
+                        break;
+                    } // if
+                    mid++;
+                } // outerWhile
+
+                if (a[index] > orderedElem[mid]) {
+                    low = mid + 1;
+                    // 缩小范围
+                    while (orderedElem[low] == flag) {
+                        low = low + 1;
+                    } // while
+                } else {
+                    high = mid - 1;
+                } // if
+            } // while
+
+            // 把a[index]插入到orderedElem[high+1]
+            // 当位置为空，没有存储元素值时...
+            if (orderedElem[high + 1] == flag) {
+                orderedElem[high + 1] = a[index];
+            } else {
+                // 位置非空，首先往前挪动元素，如果前面已满，向后挪动元素
+                int temp = high + 1;
+                while (orderedElem[temp] != flag) {
+                    temp--;
+                    if (temp < 0) {
+                        temp = high + 1;
+                        break;
+                    } // if
+                } // while
+
+                // 向后移动
+                while (orderedElem[temp] != flag) {
+                    temp++;
+                }
+
+                while (temp < high) {
+                    orderedElem[temp] = orderedElem[temp + 1];
+                    temp++;
+                }
+
+                while (temp > high + 1) {
+                    orderedElem[temp] = orderedElem[temp - 1];
+                    temp--;
+                }
+
+                orderedElem[temp] = a[index];
+            } // if
+            // ------------------------
+            index++;
+            if (index == n) {
+                break;
+            }
+        } // for
+        numOfIntercalatedElem *= 2;
+        int generatedIndex;
+        // Rebalance...
+        for (j = numOfIntercalatedElem; j > 0; --j) {
+            if (orderedElem[j] == flag) {
+                continue;
+            }
+            // 原数组元素从i处移到2i处
+            generatedIndex = j * 2;
+            if (generatedIndex >= expandedLen) {
+                generatedIndex = expandedLen - 1;
+                if (orderedElem[generatedIndex] != flag) {
+                    break;
+                }
+            }
+            orderedElem[generatedIndex] = orderedElem[j];
+            orderedElem[j] = flag;
+        } // for
+    } // while
+    cout << "\t\t";
+    for (int k = 0; k < n; ++k) {
+        if (a[k] == NULL)
+            continue;
+        cout << orderedElem[k] << " ";
+    }
+
+    cout << endl << "\t\t";
+    for (int k = 0; k < n; ++k) {
+        a[k] = orderedElem[k];
+        cout << orderedElem[k] << " ";
+    }
+}
 
 /**
  * 希尔排序（不稳定）
