@@ -69,7 +69,7 @@ void quickSort2(int *, int);        // 快速排序优化
 
 /**插入排序**/
 void insertSort(int *, int);        // 直接插入排序
-void librarySort(int *, int);       // 图书馆排序
+void librarySort1(int *, int);       // 图书馆排序
 void shellSort(int *, int);         // 希尔排序
 
 /**选择排序**/
@@ -101,6 +101,7 @@ void bogoSort(int *, int);          // BoGo排序
 void swap(int &, int &);            // 交换
 bool arrayCompare(const int *, const int *, int);    // 数组比较
 //bool compare(int, int);             // 整型比较
+bool compare(int, int);         // 数组两元素比较
 bool selfChecking(const int *, int);
 
 void allSortTimeCost();             // 所有排序消耗时间
@@ -181,7 +182,7 @@ int main(int argc, const char *argv[]) {
                 ptrFunction = shellSort;
                 break;
             case 32:
-                ptrFunction = librarySort;
+                ptrFunction = librarySort1;
                 break;
                 // 选择排序
             case 40:
@@ -264,7 +265,7 @@ void showMenu() {
     cout << "             21 <-   快速排序优化              " << endl;
     cout << "             30 <-   插入排序                 " << endl;
     cout << "             31 <-   希尔排序                 " << endl;
-    cout << "             32 <-   图书馆排序 有bug          " << endl;
+    cout << "             32 <-   图书馆排序 bug未解决      " << endl;
     cout << "             40 <-   选择排序                 " << endl;
     cout << "             41 <-   堆排序                   " << endl;
     cout << "             50 <-   归并排序 递归实现         " << endl;
@@ -952,6 +953,84 @@ void librarySort(int a[], int n) {
         cout << orderedElem[k] << " ";
     }
 }
+
+
+bool compare(int a, int b) {
+    return a == b;
+}
+
+void setval(int &a, int &b) {
+    a = b;
+}
+
+void librarySort1(int a[], int n) {
+    int *bucket = new int[n * 3];
+    int *filled = new int[n * 3];
+    int i, l;
+    int m;
+    int r;
+    int insPos;
+    int bucketSize = 0;
+    int temp;
+
+    if (n > 0) {
+        for (i = 1; i < n * 3; ++i) {
+            filled[i] = 0;
+        }
+
+        filled[0] = 1;
+        bucket[0] = a[0];
+        bucketSize = 1;
+    }
+
+    for (i = 1; i < n; ++i) {
+        l = 0;
+        r = bucketSize - 1;
+
+        while (l <= r) {
+            m = (l + r) / 2;
+            compare(a[i], bucket[m * 3]) ? r = m - 1 : l = m + 1;
+        } // while
+
+        insPos = (r >= 0) ? r * 3 + 1 : 0;
+        setval(temp, a[i]);
+//        temp = a[i];
+        while (filled[insPos]) {
+            if (compare(temp, bucket[insPos])) {
+                swap(bucket[insPos], temp);
+            }
+            insPos++;
+        } // while
+
+        setval(bucket[insPos], temp);
+//        bucket[insPos] = temp;
+        filled[insPos] = 1;
+
+        if (i == bucketSize * 2 - 1) {
+            r = bucketSize * 6 - 3;
+            l = bucketSize * 4 - 3;
+            while (l >= 0) {
+                if (filled[l]) {
+                    filled[l] = 0;
+                    filled[r] = 1;
+                    setval(bucket[r], bucket[l]);
+//                    bucket[r] = bucket[l];
+                    r -= 3;
+                } // if
+                l -= 1;
+            } // while
+            bucketSize = i + 1;
+        } // if
+    } // for
+
+    for (i = 0, l = 0; l < n * 3; ++l) {
+        if (filled[l]) {
+            setval(a[i++], bucket[l]);
+//            a[i++] = bucket[l];
+        }
+    }
+}
+
 
 /**
  * 希尔排序（不稳定）
