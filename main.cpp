@@ -70,7 +70,7 @@ void quickSort2(int *, int);        // 快速排序优化
 
 /**插入排序**/
 void insertSort(int *, int);        // 直接插入排序
-void librarySort1(int *, int);       // 图书馆排序
+void librarySort1(int *, int);      // 图书馆排序
 void shellSort(int *, int);         // 希尔排序
 
 /**选择排序**/
@@ -80,8 +80,8 @@ void smoothSort(int *, int);        // 平滑排序
 
 
 /**归并排序**/
-void mergeSort1(int *, int);        // 递归归并排序
-void mergeSort2(int *, int);        // 非递归归并排序
+void mergeSort1(int *, int);        // 归并排序递归实现
+void mergeSort2(int *, int);        // 归并排序非递归实现
 
 
 
@@ -102,7 +102,7 @@ void bogoSort(int *, int);          // BoGo排序
 void swap(int &, int &);            // 交换
 bool arrayCompare(const int *, const int *, int);    // 数组比较
 //bool compare(int, int);             // 整型比较
-bool compare(int, int);         // 数组两元素比较
+bool compare(int, int);             // 数组两元素比较
 bool selfChecking(const int *, int);
 
 void allSortTimeCost();             // 所有排序消耗时间
@@ -123,7 +123,7 @@ int main(int argc, const char *argv[]) {
     // 随机函数，生成随机数组
     srand((unsigned) time(nullptr));
     for (int &i : a)
-        i = rand() % (N * 10);
+        i = rand() % (N * 10) + 1;
 
     cout << endl;
     cout << "\t\t" << "生成的随机数服从独立均匀分布" << endl;
@@ -183,7 +183,7 @@ int main(int argc, const char *argv[]) {
                 ptrFunction = shellSort;
                 break;
             case 32:
-                ptrFunction = librarySort1;
+//                ptrFunction = librarySort1;
                 break;
                 // 选择排序
             case 40:
@@ -270,7 +270,7 @@ void showMenu() {
     cout << "             40 <-   选择排序                 " << endl;
     cout << "             41 <-   堆排序                   " << endl;
     cout << "             50 <-   归并排序 递归实现         " << endl;
-    cout << "             51 <-   递归排序 非递归实现        " << endl;
+    cout << "             51 <-   归并排序 非递归实现        " << endl;
     cout << "             80 <-   计数排序                 " << endl;
     cout << "             81 <-   桶排序 目前只实现100以内的数" << endl;
     cout << "             82 <-   基数排序 数组实现         " << endl;
@@ -299,12 +299,12 @@ void allSortTimeCost() {
  *
  * 检查数组是否有序
  *
- * @param [in] a: 待检数组
- * @param [in] n: 数组长度
- * @return [bo]
+ * @param a: 待检数组
+ * @param n: 数组长度
+ * @return
  */
 bool selfChecking(const int a[], int n) {
-    for (int i = 0; i < n; ++i) {
+    for (int i = 0; i < n - 1; ++i) {
         if (a[i] > a[i + 1])
             return false;
     }
@@ -332,8 +332,8 @@ bool selfChecking(const int a[], int n) {
  *
  * 使用异或，整数异或本身为结果0，一个数异或0结果为本身。
  *
- * @param [in] a: 第一个元素
- * @param [in] a: 第二个元素
+ * @param a: 第一个元素
+ * @param b: 第二个元素
  * @return
  */
 void swap(int &a, int &b) {
@@ -345,8 +345,8 @@ void swap(int &a, int &b) {
 
 /**
  * 冒泡排序
- * @param [in] a: 数组名
- * @param [in] n: 数组大小
+ * @param a: 数组名
+ * @param n: 数组大小
  * @return
  */
 void bubbleSort1(int a[], int n) {
@@ -366,8 +366,8 @@ void bubbleSort1(int a[], int n) {
  * 如果有交换元素，说明数组还未有序，
  * 如果没有交换过元素，说明数组已经有序。
  *
- * @param [in] a: 数组名
- * @param [in] n: 数组大小
+ * @param a: 数组名
+ * @param n: 数组大小
  * @return
  */
 void bubbleSort2(int a[], int n) {
@@ -389,8 +389,8 @@ void bubbleSort2(int a[], int n) {
  * 也称搅拌排序、快乐小时排序，
  * 鸡尾酒排序的元素比较和交换过程是双向的。
  *
- * @param [in] a: 数组名
- * @param [in] n: 数组大小
+ * @param a: 数组名
+ * @param n: 数组大小
  * @return
  */
 void cocktailSort(int a[], int n) {
@@ -461,8 +461,8 @@ void cocktailSort(int a[], int n) {
 /**
  * 奇偶排序
  *
- * @param [in] a: 待排数组
- * @param [in] n: 数组大小
+ * @param a: 待排数组
+ * @param n: 数组大小
  * @return
  */
 void oddEvenSort(int a[], int n) {
@@ -505,8 +505,8 @@ void oddEvenSort(int a[], int n) {
 /**
  * 侏儒排序
  *
- * @param [in] a: 待排数组
- * @param [in] n: 数组大小
+ * @param a: 待排数组
+ * @param n: 数组大小
  * @return
  */
 void gnomeSort1(int a[], int n) {
@@ -544,8 +544,8 @@ void gnomeSort1(int a[], int n) {
  * 但类似于冒泡排序那样比较并交换相邻元素。
  * 因此其算法复杂度与插入排序相当，但比插入排序需要更多的复制操作（用于交换相邻元素）。
  * 
- * @param [in] a: 待排数组
- * @param [in] n: 数组长度
+ * @param a: 待排数组
+ * @param n: 数组长度
  * @return
  */
 void gnomeSort2(int a[], int n) {
@@ -585,6 +585,13 @@ void gnomeSort2(int a[], int n) {
  *
  * 算法分析: 亦有人提议用1/\left(1-\frac{1}{e^\varphi}\right) \approx 1.247330950103979作递减率，
  *          同时增加换算表协助于每一循环开始时计算新间距。
+ */
+
+/**
+ * 梳排序
+ *
+ * @param a: 数组
+ * @param n: 数组大小
  */
 void combSort(int a[], int n) {
     double declineRate = 1.3;      // 递减率
@@ -626,9 +633,9 @@ void combSort(int a[], int n) {
 /**
  * 臭皮匠排序
  *
- * @param [in] a: 待排数组
- * @param [in] i: 低位
- * @param [in] j: 高位
+ * @param a: 待排数组
+ * @param i: 低位
+ * @param j: 高位
  */
 void stooge_sort(int a[], int low, int high) {
     if (a[low] > a[high]) {
@@ -648,8 +655,8 @@ void stooge_sort(int a[], int low, int high) {
 /**
  * 臭皮匠排序
  *
- * @param [in] a: 待排数组
- * @param [in] n: 数组长度
+ * @param a: 待排数组
+ * @param n: 数组长度
  * @return
  */
 void stoogeSort(int a[], int n) {
@@ -674,109 +681,136 @@ void stoogeSort(int a[], int n) {
  */
 
 /**
- * quick_sort1函数：对s[l..r]进行排序
+ * 分治（双边循环法）
  *
- * @param [in] s: 待排序数组
- * @param [in] l: 起始位置
- * @param [in] n: 结束位置
+ * @param a: 数组
+ * @param startIndex: 起始位置
+ * @param endIndex: 结束位置
  * @return
  */
-void quick_sort1(int s[], int l, int r) {
-    if (l < r) {
-        int m = (l + r) / 2;
+int partition(int a[], int startIndex, int endIndex) {
+    // 获取第1个位置（也可以是随机位置）的元素作为基准元素
+    int pivot = a[startIndex];
+    int left = startIndex;
+    int right = endIndex;
 
-        if (s[l] > s[r])
-            swap(s[l], s[r]);
-        if (s[m] > s[r])
-            swap(s[m], s[r]);
-        if (s[m] > s[l])
-            swap(s[m], s[l]);
+    while (left != right) {
+        // 控制right指针比较并左移
+        while (left < right && a[right] > pivot) {
+            --right;
+        } // innerWhile
 
-        int i = l, j = r, x = s[l];
+        //控制left指针比较并右移
+        while (left < right && a[left] <= pivot) {
+            ++left;
+        } // innerWhile
 
-        while (i < j) {
-            while (i < j && s[j] >= x)      // 从右向左找第一个小于x的数
-                j--;
-            if (i < j)
-                s[i++] = s[j];
+        if (left < right) {
+//            int p = a[left];
+//            a[left] = a[right];
+//            a[right] = p;
+            // 这里可以使用异或实现的交换函数
+            swap(a[left], a[right]);
+        } // if
+    } // outerWhile
 
-            while (i < j && s[i] < x)       // 从左向右找第一个大于等于x的数
-                i++;
-            if (i < j)
-                s[j--] = s[i];
-        }
+    // pivot和指针重合点交换
+    a[startIndex] = a[left];
+    a[left] = pivot;
 
-        s[i] = x;
-        quick_sort1(s, l, i - 1);       // 递归调用
-        quick_sort1(s, i + 1, r);
+    return left;
+} // partition
+
+
+/**
+ *
+ * @param a: 数组
+ * @param startIndex: 起始位置
+ * @param endIndex: 结束位置
+ */
+void qs1(int a[], int startIndex, int endIndex) {
+    // startIndex大于endIndex时递归结束
+    if (startIndex >= endIndex) {
+        return;
     }
-}
+
+    // 得到基准元素位置
+    int pivotIndex = partition(a, startIndex, endIndex);
+    // 根据基准元素，分成两部分进行递归
+    qs1(a, startIndex, pivotIndex - 1);
+    qs1(a, pivotIndex + 1, endIndex);
+} // qs1
 
 
 /**
- * 快速排序优化
- * quick_sort2函数：对s[l..r]进行排序
+ * 快速排序（双边循环法）
  *
- * @param [in] s: 待排序数组
- * @param [in] l: 起始位置
- * @param [in] n: 结束位置
- * @return
- */
-const int MAXSIZE = 7;
-
-void quick_sort2(int s[], int l, int r) {
-    if ((r - l) > MAXSIZE) {
-        while (l < r) {
-            int m = (l + r) / 2;
-            if (s[l] > s[r])
-                swap(s[l], s[r]);
-            if (s[m] > s[r])
-                swap(s[m], s[r]);
-            if (s[m] > s[l])
-                swap(s[m], s[l]);
-            int i = l, j = r, x = s[l];
-            while (i < j) {
-                while (i < j && s[j] >= x)      // 从右向左找第一个小于x的数
-                    j--;
-                if (i < j)
-                    s[i++] = s[j];
-
-                while (i < j && s[i] < x)       // 从左向右找第一个大于等于x的数
-                    i++;
-                if (i < j)
-                    s[j--] = s[i];
-            }
-
-            s[i] = x;
-            quick_sort2(s, l, i - 1);       // 递归调用
-            l = i + 1;
-        }
-    } else
-        insertSort(s, r - l + 1);
-}
-
-
-/**
- * 快速排序
- *
- * @param [in] a: 待排序数组
- * @param [in] n: 数组大小
- * @return
+ * @param a: 数组
+ * @param n: 数组大小
  */
 void quickSort1(int a[], int n) {
-    quick_sort1(a, 0, n - 1);
+    qs1(a, 0, n - 1);
 }
+
+/**
+ * 分治（单边循环法）
+ *
+ * @param a: 数组
+ * @param startIndex: 起始位置
+ * @param endIndex: 结束位置
+ * @return
+ */
+int partitionV2(int a[], int startIndex, int endIndex) {
+    // 取第1个元素作为基准元素
+    int pivot = a[startIndex];
+    int mark = startIndex;
+
+    for (int i = startIndex + 1; i <= endIndex; ++i) {
+        if (a[i] < pivot) {
+            ++mark;
+            int p = a[mark];
+            a[mark] = a[i];
+            a[i] = p;
+            // 这里使用异或实现的交换函数会出现意想不到的情况
+//            swap(a[mark], a[i]);
+        } // if
+    } // for
+
+    a[startIndex] = a[mark];
+    a[mark] = pivot;
+
+    return mark;
+} // partitionV2
 
 
 /**
- * 快速排序优化
  *
- * @param [in] a: 待排序数组
- * @param [in] n: 数组大小
- * @return
+ * @param a: 数组
+ * @param startIndex: 起始位置
+ * @param endIndex: 结束位置
+ */
+void qs2(int a[], int startIndex, int endIndex) {
+    // startIndex大于endIndex时递归结束
+    if (startIndex >= endIndex) {
+        return;
+    }
+
+    // 得到基准元素位置
+    int pivotIndex = partitionV2(a, startIndex, endIndex);
+    // 根据基准元素，分成两部分进行递归
+    qs1(a, startIndex, pivotIndex - 1);
+    qs1(a, pivotIndex + 1, endIndex);
+} // qs2
+
+
+/**
+ * 快速排序（单边循环法）
+ *
+ * @param a: 数组
+ * @param n: 数组大小
  */
 void quickSort2(int a[], int n) {
-    quick_sort2(a, 0, n - 1);
+    qs2(a, 0, n - 1);
 }
 
 
@@ -802,8 +836,8 @@ void quickSort2(int a[], int n) {
 /**
  * 直接插入排序
  *
- * @param [in] a: 数组名
- * @param [in] n: 数组大小
+ * @param a: 数组名
+ * @param n: 数组大小
  * @return
  */
 void insertSort(int a[], int n) {
@@ -1098,8 +1132,8 @@ void shellSort(int a[], int n) {
 /**
  * 选择排序
  *
- * @param [in] a: 数组名
- * @param [in] n: 数组大小
+ * @param a: 数组名
+ * @param n: 数组大小
  * @return
  */
 void selectSort(int a[], int n) {
@@ -1131,51 +1165,63 @@ void selectSort(int a[], int n) {
  */
 
 /**
- * 将a[s..m]调整成为大顶堆
+ * 将a[s..n]调整成为大顶堆
  *
- * @param [in] a: 数组名
- * @param [in] s: 待调整序列的起始位置
- * @param [in] n: 待调整序列的结束位置
+ * @param a: 数组名
+ * @param parentIndex: 待调整序列的起始位置
+ * @param n: 待调整序列的结束位置
  * @return
  */
-void HeapAdjust(int a[], int s, int m) {
-    int temp, j;
-    temp = a[s];
-    for (j = 2 * s + 1; j <= m; j = 2 * j + 1) {        // 从上到下，从左到右，将每个非叶结点及其子树调整为大顶堆
-        if (j < m && a[j] < a[j + 1])
-            j++;        // 用j标记左右子树中的较大值
-        if (temp >= a[j])       // 若根节点大于左右子树，则跳出
+void downAdjust(int a[], int parentIndex, int n) {
+    // temp保存父节点，用于最后的赋值
+    int temp = a[parentIndex];
+    int childIndex = 2 * parentIndex + 1;
+    while (childIndex < n) {
+        // 如果有右孩子，且右孩子比左孩子大，则定位到右孩子
+        if (childIndex + 1 < n && a[childIndex] < a[childIndex + 1]) {
+            ++childIndex;
+        } // if
+
+        // 如果父节点小于任何一份孩子的值，则跳出
+        if (temp >= a[childIndex]) {
             break;
-        a[s] = a[j];        // 若根节点小于左右子树，则跟较大值交换
-        s = j;
-    }
-    a[s] = temp;     // 交换数据
+        } // if
+
+        // 单向赋值即可
+        a[parentIndex] = a[childIndex];
+        parentIndex = childIndex;
+        childIndex = 2 * childIndex + 1;
+    } // while
+
+    a[parentIndex] = temp;
 }
 
 
 /**
  * 堆排序
- * 排序过程: 1、讲待排序的序列构建成一个大顶堆
- *          2、逐步将每个最大值的根结点与末尾元素交换，并且再调整其成为大顶堆
+ * 排序过程: 1、将待排序的序列构建成一个大顶堆
+ *          2、逐步将每个最大值的根结点与末尾元素交换，并且再调整其成为最大堆
  *
- * @param [in] a: 数组名
- * @param [in] n: 数组大小
+ * @param a: 数组名
+ * @param n: 数组大小
  * @return
  */
 void heapSort(int a[], int n) {
     int i;
-    for (i = n / 2 - 1; i >= 0; i--) {      // 讲数组a构建成大顶堆
-        HeapAdjust(a, i, n);
-
-        for (i = n - 1; i > 0; i--) {
-            swap(a[0], a[i]);       // 将堆顶数据与当前未排序子序列的最后一个数据交换
-            HeapAdjust(a, 0, i - 1);     // 将a[0..i - 1]调整为大顶堆
-        }
+    for (i = (n - 2) / 2; i >= 0; --i) {
+        // 将数组a构建成最大堆
+        downAdjust(a, i, n);
     }
+
+    for (i = n - 1; i > 0; --i) {
+        swap(a[0], a[i]);       // 将堆顶数据与最后一个数据交换
+        downAdjust(a, 0, i);        // 下沉调整最大堆
+    }
+
 }
 
 
-/*
+/**
  * 平滑排序（不稳定）
  *
  * 使用一种由多个堆组成的优先队列，这种优先队列在取出最大元素后剩余元素可以就地调整成优先队列，
@@ -1209,11 +1255,11 @@ void smoothSort(int a[], int n) {
  * Merge函数: 将有序的两个序列a[first..mid]和a[mid + 1..last]
  * 合并为一个有序序列temp[first..last]
  *
- * @param [in] a 待合并数组
- * @param [in] temp 临时数组存放归并结果
- * @param [in] first 起始位置
- * @param [in] mid 中间位置
- * @param [in] last 结束位置
+ * @param a: 待合并数组
+ * @param temp: 临时数组存放归并结果
+ * @param first: 起始位置
+ * @param mid: 中间位置
+ * @param last: 结束位置
  * @return
  */
 void Merge(int a[], int temp[], int first, int mid, int last) {
@@ -1240,10 +1286,10 @@ void Merge(int a[], int temp[], int first, int mid, int last) {
 /**
  * mergesort函数: 将a[first..last]归并排序为temp[first..last]
  *
- * @param [in] a 待排序数组
- * @param [in] temp 临时数组存放排序结果
- * @param [in] first 起始位置
- * @param [in] last 结束位置
+ * @param a: 待排序数组
+ * @param temp: 临时数组存放排序结果
+ * @param first: 起始位置
+ * @param last: 结束位置
  * @return
  */
 void mergesort(int a[], int temp[], int first, int last) {
@@ -1261,8 +1307,8 @@ void mergesort(int a[], int temp[], int first, int last) {
 /**
  * 递归归并排序
  *
- * @param [in] a: 待排序数组
- * @param [in] n: 数组大小
+ * @param a: 待排序数组
+ * @param n: 数组大小
  * @return
  */
 void mergeSort1(int a[], int n) {
@@ -1275,10 +1321,10 @@ void mergeSort1(int a[], int n) {
 /**
  * mergeSort2函数：将a中相邻长度为s的子序列两两归并
  *
- * @param [in] a 待排序数组
- * @param [in] temp 临时数组存放归并结果
- * @param [in] s 子序列长度
- * @param [in] n 数组大小
+ * @param a: 待排序数组
+ * @param temp: 临时数组存放归并结果
+ * @param s: 子序列长度
+ * @param n: 数组大小
  * @return
  */
 void mergeSort2(int a[], int temp[], int s, int n) {
@@ -1295,8 +1341,8 @@ void mergeSort2(int a[], int temp[], int s, int n) {
 /**
  * 非递归归并排序
  *
- * @param [in] a: 待排序数组
- * @param [in] n: 数组大小
+ * @param a: 待排序数组
+ * @param n: 数组大小
  * @return
  */
 void mergeSort2(int a[], int n) {
@@ -1331,9 +1377,9 @@ void mergeSort2(int a[], int n) {
 /**
  * 获取数组中的最大元素
  *
- * @param [in] a: 待排序数组
- * @param [in] n: 数组大小
- * @return [in]: 数组中的最大元素
+ * @param a: 待排序数组
+ * @param n: 数组大小
+ * @return 数组中的最大元素
  */
 int getArrayMaxElem(const int a[], int n) {
     int maxElem = 0;
@@ -1348,9 +1394,9 @@ int getArrayMaxElem(const int a[], int n) {
 /**
  * 获取数组中的最小元素
  *
- * @param [in] a: 数组
- * @param [in] n: 数组大小
- * @return [in]: 数组中的最小元素
+ * @param a: 数组
+ * @param n: 数组大小
+ * @return 数组中的最小元素
  */
 int getArrayMinElem(const int a[], int n) {
     int minElem = 0;
@@ -1365,8 +1411,8 @@ int getArrayMinElem(const int a[], int n) {
 /**
  * 计数排序
  *
- * @param [in] a: 待排序数组
- * @param [in] n: 数组大小
+ * @param a: 待排序数组
+ * @param n: 数组大小
  * @return
  */
 void countSort(int a[], int n) {
@@ -1407,8 +1453,8 @@ void countSort(int a[], int n) {
 /**
  * 鸽巢排序
  *
- * @param [in] a: 待排序数组
- * @param [in] n: 数组大小
+ * @param a: 待排序数组
+ * @param n: 数组大小
  * @return
  */
 void pigeonholeSort(int a[], int n) {
@@ -1456,8 +1502,8 @@ struct Node {
 /**
  * 获取桶的数量，这里并不是线性的
  *
- * @param [in] n: 数组大小
- * @return [in]: 桶的个数
+ * @param n: 数组大小
+ * @return 桶的个数
  */
 int getBucketCount(int n) {
     if (n <= 100)
@@ -1485,8 +1531,8 @@ int getBucketCount(int n) {
 /**
  * 桶排序
  *
- * @param [in] a: 待排数组
- * @param [in] n: 数组大小
+ * @param a: 待排数组
+ * @param n: 数组大小
  * @return
  */
 void bucketSort(int a[], int n) {
@@ -1561,9 +1607,9 @@ void bucketSort(int a[], int n) {
 /**
  * 求最大位数
  *
- * @param [in] a: 数组
- * @param [in] n: 数组长度
- * @return [in] d: 数组中元素的最大位数
+ * @param a: 数组
+ * @param n: 数组长度
+ * @return 数组中元素的最大位数
  */
 int getMaxDigit(int a[], int n) {
     int maxElem = getArrayMaxElem(a, n);
@@ -1579,7 +1625,10 @@ int getMaxDigit(int a[], int n) {
 
 
 /**
- * 基数排序 数组实现
+ * 基数排序（数组实现）
+ *
+ * @param a: 数组
+ * @param n: 数组大小
  */
 void radixSort1(int a[], int n) {
     int length = getMaxDigit(a, n);
@@ -1638,10 +1687,10 @@ void radixSort1(int a[], int n) {
 /**
  * 比较函数
  *
- * @param [in] arr1: 第一个数组
- * @param [in] arr2: 第二个数组
- * @param [in] n: 数组大小
- * @return [bo]: 相等返回true，不等返回false
+ * @param arr1: 第一个数组
+ * @param arr2: 第二个数组
+ * @param n: 数组大小
+ * @return 相等返回true，不等返回false
  */
 bool arrayCompare(const int arr1[], const int arr2[], int n) {
     for (int i = 0; i < n; ++i) {
@@ -1655,9 +1704,9 @@ bool arrayCompare(const int arr1[], const int arr2[], int n) {
 /**
  * 判断是否有序
  *
- * @param [in] a: 待判断数组
- * @param [in] n: 数组长度
- * @return [bo]
+ * @param a: 待判断数组
+ * @param n: 数组长度
+ * @return
  */
 bool inOrder(const int a[], int n) {
     for (int i = 0; i < n - 1; ++i) {
@@ -1671,8 +1720,8 @@ bool inOrder(const int a[], int n) {
 /**
  * 打乱函数
  *
- * @param [in] a: 待打乱数组
- * @param [in] n: 数组长度
+ * @param a: 待打乱数组
+ * @param n: 数组长度
  * @return
  */
 void shuffle(int a[], int n) {
@@ -1688,8 +1737,8 @@ void shuffle(int a[], int n) {
 /**
  * BoGo排序
  *
- * @param [in] a 待排序数组
- * @param [in] n 数组长度
+ * @param a: 待排序数组
+ * @param n: 数组长度
  * @return
  */
 void bogoSort(int a[], int n) {
